@@ -1,11 +1,31 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
+import API from "../utils/API.js"
 
 class PlayNow extends Component {
+    state = {
+        redirectTo: null
+    };
+
+    componentDidMount() {
+        API.checkAuth()
+            .then(response => {
+                // this runs if the user is logged in
+                console.log("response: ", response)
+            })
+            .catch(err => {
+                // this runs if the uer is NOT logged in
+                this.setState({ redirectTo: "/" })
+            })
+    }
 
     render() {
+        if (this.state.redirectTo) {
+            return <Redirect to={this.state.redirectTo} />
+        }
+
         return (
             <Container fluid>
                 <Row>

@@ -1,14 +1,25 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API"
 
 class UserHome extends Component {
     state = {
-        users: []
+        users: [],
+        redirectTo: null
     };
 
     componentDidMount() {
+        API.checkAuth()
+            .then(response => {
+                // this runs if the user is logged in
+                console.log("response: ", response)
+            })
+            .catch(err => {
+                // this runs if the uer is NOT logged in
+                this.setState({ redirectTo: "/" })
+            })
         this.loadUsers();
     }
 
@@ -25,6 +36,9 @@ class UserHome extends Component {
     }
 
     render() {
+        if (this.state.redirectTo) {
+            return <Redirect to={this.state.redirectTo} />
+        }
         return (
             <Container fluid>
                 <Row>
@@ -49,8 +63,8 @@ class UserHome extends Component {
                     <Col size="lg-7 md-12 sm-12">
                         <Jumbotron jumboHeight="80%">
                             <h4>LEADER BOARD</h4>
-                            <table class="table">
-                                <thead class="thead-dark">
+                            <table className="table">
+                                <thead className="thead-dark">
                                     <tr>
                                         <th scope="col">Ranking</th>
                                         <th scope="col">Name</th>
