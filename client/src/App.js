@@ -7,6 +7,7 @@ import './App.css';
 import PlayNow from "./pages/PlayNow";
 import UserHome from "./pages/UserHome";
 import MultiPlayer from "./pages/MultiPlayer";
+import Category from "./pages/CategoryContainer";
 import GameContainer from "./pages/GameContainer";
 import SingleGameContainer from "./pages/SPGameContainer";
 import NoMatch from "./pages/NoMatch";
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/game" component={GameContainer} />
           <Route exact path="/singlegame" component={SingleGameContainer} />
           <Route exact path="/multi/" component={MultiPlayer} />
+          <Route exact path="/cat/" component={Category} />
           <Route component={NoMatch} />
         </Switch>
         {/* <Footer></Footer> */}

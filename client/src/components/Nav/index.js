@@ -17,19 +17,12 @@ function Nav() {
           <li className="nav-item">
             <a className="nav-link" href="#">Logout</a>
           </li>
-          {/* <li className="nav-item">
-        <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li> */}
         </ul>
-        {/* <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"></input>
-      <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> */}
       </div>
-      <a style={{ fontSize: "30px", fontFamily: "'Yatra One', cursive", marginRight: "45%" }} className="navbar-brand" >TRIVIA WAR</a>
+      <a style={{ fontSize: "30px", fontFamily: " Yatra One, cursive", marginRight: "45%" }} className="navbar-brand" > TRIVIA WAR
+      </a>
+    </nav>
+  )
+}
 
-
-      );
-    }
-    
-    export default Nav;
+export default Nav;

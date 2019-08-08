@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import GameCard from "../components/GameCard";
 import GameCol from "../components//GameCol";
+import CategoryContainer from '../pages/CategoryContainer';
+import SocketContext from '../pages/socket-context';
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 // added by jyoti for scoket.io
@@ -9,7 +11,7 @@ import openSocket from 'socket.io-client';
 const socket = openSocket("http://localhost:3001");
 
 let quizQuestions = [];
-let socketid;
+// let socketid;
 class GameContainer extends Component {
     state = {
         // userId: this.props.params.userId,
@@ -26,26 +28,38 @@ class GameContainer extends Component {
         outcome: "",
         index: 0,
         timer: 10,
-        socketArr: ""
+        socketid: ""
     };
 
     //TODO: Add route that will get the game based on the user's selection
     componentDidMount() {
         this.setSocketId();
-        this.getGame("5d47aeac6793d50a1005670f");
+        this.getSocketContext();
+        this.getGame("5d4b2f315a195f0c38f008d6");
     }
+
+
 
     // added by jyoti for getting the socket id after a user connected.
 
     setSocketId() {
         socket.on('userConnected', socketData => {
-            socketid = socketData.socketId;
-            console.log(" this is the socket id " + socketid);
+            this.setState.socketid = socketData.socketId;
+
+            console.log(" this is the socket id " + this.socketid);
             socket.on('newclientconnect', data => {
                 console.log(data.description);
             });
         });
     }
+    getSocketContext() {
+        return (
+            <SocketContext.Provider value={this.state.socketid}>
+                <CategoryContainer />
+            </SocketContext.Provider>
+        )
+    }
+
     //Getting the game information from the Database based on the game's ID
     //Then updating the state
     getGame(gameId) {
@@ -91,7 +105,8 @@ class GameContainer extends Component {
         console.log("Socket id", socketid);
         if (id) {
             this.setState({
-                userSelect: id
+                userSelect: id,
+                socketid: socketid
             }, () => {
                 //putting this in a callback so we're sure the state has been updated
                 //before setUserAnswer is called
@@ -211,7 +226,7 @@ class GameContainer extends Component {
                                     <GameCard
                                         id={answer}
                                         key={answer}
-                                        socketid={socketid}
+                                        socketid={this.socketid}
                                         handleSelection={this.handleSelection.bind(this)}
                                     />
                                 ))}
