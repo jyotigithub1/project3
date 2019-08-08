@@ -39,7 +39,7 @@ var clients = 0;
 io.on('connection', function (socket) {
     clients++;
     console.log('A user connected!', socket.id);
-    // io.sockets.emit('broadcast', { description: clients + ' clients connected!' });
+    io.sockets.emit('broadcast', { description: clients + ' clients connected!' });
     socket.emit('userConnected', { socketId: socket.id });
     socket.emit('newclientconnect', { description: 'Hey, welcome!' });
     socket.broadcast.emit('newclientconnect', { description: clients + ' clients connected!' });

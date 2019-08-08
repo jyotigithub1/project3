@@ -3,7 +3,10 @@ const userController = require("../../controllers/userController");
 
 // // Matches with "/api/user"
 router.route("/")
-    .get(userController.findAll);
+  .get(userController.findAll);
+
+router.route("/updateSocket")
+  .post(userController.updateSocket);
 
 // // Matches with "/api/user/:id"
 router.route("/:userId")
